@@ -1,14 +1,14 @@
 all: main
 
-NAME = Ecs
+NAME = ecs
 
 OBJECTS = example.o glad.o Engine.o EntityManager.o
 
 INC = -Iinc
 
-CC = g++
+CC = g++-13
 
-CXX_FLAGS = -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -fpermissive
+CXX_FLAGS = -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -std=c++20
 
 main: $(OBJECTS)
 	$(CC) $^ $(CXX_FLAGS) $(INC) -O3 -o $(NAME)
