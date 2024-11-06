@@ -2,9 +2,12 @@ all: main
 
 NAME = ecs
 
-OBJECTS = example.o glad.o Engine.o EntityManager.o
+OBJECTS = example.o glad.o Engine.o EntityManager.o ComponentManager.o
 
 INC = -Iinc
+
+DEFINE = DEBUG
+#DEFINE = 
 
 CC = g++-13
 
@@ -17,7 +20,7 @@ main: $(OBJECTS)
 	$(CC) -c $< $(INC) -o $@
 
 %.o: src/%.cpp
-	$(CC) -c $< $(INC) -o $@
+	$(CC) -c $< $(INC) -D$(DEFINE) -o $@
 
 realclean: $(OBJECTS) $(NAME)
 	rm $^
