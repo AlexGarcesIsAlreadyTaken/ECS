@@ -12,7 +12,7 @@ Task List:
 - [ ] Entity Handler [Nomad approach](https://medium.com/@savas/nomad-game-engine-part-4-2-adding-handles-8d299d80c7d0)
 - [ ] Events
 
-To Execute (Not recommended for now):
+Compilation (Not recommended for now):
 ```
     make -j10
 ```
