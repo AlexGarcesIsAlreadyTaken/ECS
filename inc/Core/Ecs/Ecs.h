@@ -46,11 +46,18 @@ public:
    *
    * ecs.forEach<Transform, Physics>(move);
    *
+   * forEach<Transform, Physics>(move) {
+   *   A(entity in entities) {
+   *     if entities has {Transform, Physics}: move();
+   *   }
+   * }
    */
 
-  // TODO: Implement
-  template<typename T, typename ...Types>
-  void forEach(std::function<void (T, Types...)> function) {
+  // @brief: For each entity with components {T, Types...}
+  // we execute method "function" taking the mentioned components
+  // as arguments ("function" is a void method)
+  template<typename ...Types>
+  void forEach(const std::function<void(Types&...)>& function) {
  
   }
 
