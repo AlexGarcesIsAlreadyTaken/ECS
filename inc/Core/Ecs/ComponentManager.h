@@ -34,7 +34,7 @@ public:
   }
 
   template <typename T>
-  const ComponentType getComponentType() {
+  const ComponentType getComponentType() const {
     const char* name = typeid(T).name();
     auto it = this->componentTypeID.find(name);
     LOGGER_ASSERT(it != this->componentTypeID.end(), "Component is not registered.");

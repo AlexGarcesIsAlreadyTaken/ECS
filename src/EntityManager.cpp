@@ -8,6 +8,7 @@ EntityManager::EntityManager() {
 		this->signatures[i].reset();
 	}
 	this->livingEntities = 0;
+  this->mLiveEntities.clear();
 }
 
 const EntityID EntityManager::createEntity() {
@@ -17,6 +18,7 @@ const EntityID EntityManager::createEntity() {
 	this->availableEntities.pop();
 	this->entitiesStatus[entity] = EntityStatus::Alive;
 	this->livingEntities++;
+  this->mLiveEntities.insert(entity);
 	return entity;
 }
 
@@ -27,6 +29,7 @@ void EntityManager::destroyEntity(EntityID entity) {
 	this->entitiesStatus[entity] = EntityStatus::Dead;
 	this->signatures[entity].reset();
 	--this->livingEntities;
+  this->mLiveEntities.erase(entity);
 }
 
 const Signature EntityManager::getSignature(EntityID entity) const {

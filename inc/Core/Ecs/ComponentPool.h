@@ -28,12 +28,6 @@ public:
 		this->sparseSet[entity] = denseSet.size();
 		this->denseSet.push_back(component);
 		this->componentToEntity.push_back(entity);
-	
-		for (uint32_t i = 0; i < this->denseSet.size(); i++) {
-			size_t e = this->componentToEntity[i];
-			DEBUG_MESSAGE("Entity(" << e << ") has component(" << this->sparseSet[e] << ")");
-		}
-		DEBUG_MESSAGE("-----------------------------------------------");
 	}
 
 	T& getComponent(EntityID entity) const {
@@ -61,12 +55,6 @@ public:
     // remove component (no longer needed)
     this->denseSet.pop_back();
     this->componentToEntity.pop_back();
-
-    for (uint32_t i = 0; i < this->denseSet.size(); i++) {
-      size_t e = this->componentToEntity[i];
-      DEBUG_MESSAGE("Entity(" << e << ") has component(" << this->sparseSet[e] << ")");
-    }
-    DEBUG_MESSAGE("-----------------------------------------------");
   }
 
   void entityDestroyed(EntityID entity) override {

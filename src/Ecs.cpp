@@ -1,5 +1,5 @@
 #include "Core/Ecs/Ecs.h"
-
+#include "Core/Ecs/Entity.h"
 
 const Entity Ecs::createEntity() {
   return {this->entityManager.createEntity(), this};

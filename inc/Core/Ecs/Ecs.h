@@ -5,21 +5,6 @@
 #include "Core/Ecs/EntityManager.h"
 #include <functional>
 
-// There exists to approach when calling to ecs methods
-// 1:
-//   Entity e = ecs.createEntity();
-//   C component;
-//   ecs.addComponent<C>(e, component);
-// 2:
-//  Entity e = ecs.createEntity();
-//  C component;
-//  e.addComponent<C>(component);
-// 
-// This example is small so it is not appreciated
-// but for enormous code is easier for the user
-// to, instead of calling to the ECS, calling from
-// the entity, as if it was some kind of living 'Entity'
-
 struct Entity;
 
 class Ecs {
@@ -41,7 +26,6 @@ public:
     Signature componentSignature = 0b01 << this->componentManager.getComponentType<T>();
     Signature newSignature = signature | componentSignature;
     this->entityManager.setSignature(entity, newSignature);
-    DEBUG_MESSAGE(entity << " signature: " << newSignature);
   }
 
   template <typename T>
@@ -77,33 +61,38 @@ public:
   // @brief: For each entity with components {T, Types...}
   // we execute method "function" taking the mentioned components
   // as arguments ("function" is a void method)
-  template<typename ...Types>
-  void forEach(const std::function<void(Types&...)>& function) {
- 
+  template <typename ...Types, typename Func>
+  void forEach(Func&& function) {
+    const Signature maskSignature = getMask<Types...>();
+    DEBUG_MESSAGE("Signature: " << maskSignature);
+    EntitiesPool entitiesPool = this->entityManager.liveEntities();
+    for (auto it = entitiesPool.begin(); it != entitiesPool.end(); it++) {
+      const EntityID entity = *it;
+      const Signature entitySignature = this->entityManager.getSignature(entity);
+      if ((entitySignature&maskSignature) == maskSignature) {
+        DEBUG_MESSAGE("Entity(" << entity << ") has components " << entitySignature);
+      }
+    }
   }
 
 private:
+
+  template <typename T, typename ...Types> requires (sizeof...(Types) > 0)
+  const Signature getMask() const {
+    const ComponentType type = componentManager.getComponentType<T>();
+    const Signature typeSignature = 0b01 << type;
+    return typeSignature | getMask<Types...>();
+  }
+  
+  template <typename T>
+  const Signature getMask() const {
+    const ComponentType type = componentManager.getComponentType<T>();
+    return 0b01 << type;
+  }
+  
   EntityManager entityManager;
   ComponentManager componentManager;
 };
 
-struct Entity {
-  EntityID entity;
-  Ecs *ecs;
-
-  template <typename T>
-  inline void addComponent(const T& t) {
-    ecs->addComponent<T>(this->entity, t);
-  }
-
-  template <typename T>
-  inline void removeComponent() {
-    ecs->removeComponent<T>(this->entity);
-  }
-
-  inline void destroy() {
-    ecs->destroyEntity(this->entity);
-  }
-};
 
 #endif

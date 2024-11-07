@@ -9,6 +9,8 @@ public:
   EntityManager();
   ~EntityManager() = default;
 
+  const EntitiesPool& liveEntities() { return this->mLiveEntities; }
+
   const EntityID createEntity();
   void destroyEntity(EntityID entity);
 
@@ -19,6 +21,8 @@ public:
 
 private:
   std::queue<EntityID> availableEntities;
+
+  EntitiesPool mLiveEntities;
   EntityStatus entitiesStatus[MAX_ENTITIES];
   Signature signatures[MAX_ENTITIES];
 
