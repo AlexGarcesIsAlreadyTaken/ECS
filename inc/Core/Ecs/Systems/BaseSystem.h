@@ -1,10 +1,18 @@
-#ifndef ECS_BASE_SYSTEM_H
-#define ECS_BASE_SYSTEM_H
+#ifndef ECS_SYSTEMS_BASE_SYSTEM_H
+#define ECS_SYSTEMS_BASE_SYSTEM_H
 
-struct BaseSystem {
-  virtual void init() {} 
-  virtual void update(Real dt) {}
+#include "Core/Math/Constants.h"
+#include "Core/Ecs/Ecs.h"
+
+class BaseSystem {
+public:
+  virtual void setEcs(Ecs *ecs) final { this->ecs = ecs; }
+
+  virtual void init() {}
+  virtual void update(Math::Real dt) {}
   virtual void render() {}
-}
+protected:
+  Ecs *ecs;  
+};
 
 #endif

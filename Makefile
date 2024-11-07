@@ -2,27 +2,27 @@ NAME = main
 
 all: $(NAME)
 
-OBJECTS = glad.o Engine.o EntityManager.o ComponentManager.o Ecs.o example.o
+OBJECTS = Engine.o glad.o $(NAME).o EntityManager.o ComponentManager.o Ecs.o
 
-INC = -Iinc
+INC = inc
 
 DEFINE = DEBUG
 #DEFINE = 
 
 CC = g++-11
 
-LINK = -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -std=c++20
+LINK = -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 
 CXX_FLAGS = -std=c++20
 
-main: $(OBJECTS)
-	$(CC) $^ $(LINK) $(INC) -O3 -o $(NAME)
+$(NAME): $(OBJECTS)
+	$(CC) $^ $(LINK) -O3 -o $(NAME)
 
 %.o: src/%.c
-	$(CC) -c $< $(INC) -o $@
+	$(CC) $^ -I$(INC) -D$(DEFINE) $(CXX_FLAGS) -c -o $@
 
 %.o: src/%.cpp
-	$(CC) -c $< $(INC) -D$(DEFINE) $(CXX_FLAGS) -o $@
+	$(CC) $^ -I$(INC) -D$(DEFINE) $(CXX_FLAGS) -c -o $@
 
 realclean: $(OBJECTS) $(NAME)
 	rm $^

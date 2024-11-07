@@ -1,6 +1,5 @@
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
 #include "glad/glad.h"
+#include <GLFW/glfw3.h>
 #include "Utils/Logger.h"
 #include "Utils/Window.h"
 #include "Core/Engine.h"
@@ -19,17 +18,20 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		
 		int width = 640;
-    GLFWwindow *window = glfwCreateWindow(width, width / aspect_ratio, "GeocGL", nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(width, width / aspect_ratio, "ECS", nullptr, nullptr);
     LOGGER_ASSERT(window, "Window or OpenGL context creation failed");
     
     glfwMakeContextCurrent(window);
     
-    gladLoadGL();
+    gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
     
     glfwSetKeyCallback(window, key_callback);
 
 		double previousTime = glfwGetTime();
-    
+
+
+    Engine::instance()->init();
+
     while (!glfwWindowShouldClose(window)) {
         glfwSwapBuffers(window);
 
