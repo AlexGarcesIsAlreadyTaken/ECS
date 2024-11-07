@@ -4,7 +4,7 @@ ComponentManager::ComponentManager() {
   this->componentsRegistered = 0;
 }
 
-void ComponentManager::entityDestroyed(Entity entity) {
+void ComponentManager::entityDestroyed(EntityID entity) {
   for (auto it = this->componentTypeID.begin(); it != this->componentTypeID.end(); ++it) {
     this->componentPools[it->second]->entityDestroyed(entity);
   }

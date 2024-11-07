@@ -5,7 +5,7 @@
 #include <bitset>
 
 // @brief: Identifies an entity of the world
-typedef uint32_t Entity;
+typedef uint32_t EntityID;
 const uint32_t MAX_ENTITIES = 5000;
 enum class EntityStatus {Dead = 0, Alive};
 

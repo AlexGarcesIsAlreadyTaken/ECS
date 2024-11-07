@@ -10,17 +10,17 @@ EntityManager::EntityManager() {
 	this->livingEntities = 0;
 }
 
-const Entity EntityManager::createEntity() {
+const EntityID EntityManager::createEntity() {
 	LOGGER_ASSERT(this->livingEntities < MAX_ENTITIES, "Too many entities alive.");
 
-	Entity entity = this->availableEntities.front();
+	EntityID entity = this->availableEntities.front();
 	this->availableEntities.pop();
 	this->entitiesStatus[entity] = EntityStatus::Alive;
 	this->livingEntities++;
 	return entity;
 }
 
-void EntityManager::destroyEntity(Entity entity) {
+void EntityManager::destroyEntity(EntityID entity) {
 	LOGGER_ASSERT(entity < MAX_ENTITIES, "entity out of range.");
 	LOGGER_ASSERT(this->entitiesStatus[entity] != EntityStatus::Dead, "Entity not alive.");
 	this->availableEntities.push(entity);
@@ -29,21 +29,21 @@ void EntityManager::destroyEntity(Entity entity) {
 	--this->livingEntities;
 }
 
-const Signature EntityManager::getSignature(Entity entity) const {
+const Signature EntityManager::getSignature(EntityID entity) const {
 	LOGGER_ASSERT(entity < MAX_ENTITIES, "entity out of range.");
 	LOGGER_ASSERT(this->entitiesStatus[entity] != EntityStatus::Dead, "Entity not alive.");
 
 	return this->signatures[entity];
 }
 
-void EntityManager::setSignature(Entity entity, const Signature& signature) {
+void EntityManager::setSignature(EntityID entity, const Signature& signature) {
 	LOGGER_ASSERT(entity < MAX_ENTITIES, "entity out of range.");
 	LOGGER_ASSERT(this->entitiesStatus[entity] != EntityStatus::Dead, "Entity not alive.");
 
 	this->signatures[entity] = signature;
 }
 
-const EntityStatus EntityManager::getStatus(Entity entity) const {
+const EntityStatus EntityManager::getStatus(EntityID entity) const {
   return this->entitiesStatus[entity];
 }
 

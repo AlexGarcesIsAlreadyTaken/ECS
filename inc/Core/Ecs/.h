@@ -1,0 +1,5 @@
+#ifndef ECS_ENTITY_HANDLER_H
+#define ECS_ENTITY_HANDLER_H
+
+
+#endif

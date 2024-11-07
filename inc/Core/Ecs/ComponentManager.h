@@ -24,12 +24,12 @@ public:
   }
 
   template <typename T>
-  void addComponent(Entity entity, const T& component) {
+  void addComponent(EntityID entity, const T& component) {
     getComponentPool<T>()->addComponent(entity, component);
   }
 
   template <typename T>
-  T& getComponent(Entity entity) const {
+  T& getComponent(EntityID entity) const {
     return getComponentPool<T>()->getComponent(entity);
   }
 
@@ -42,11 +42,11 @@ public:
   }
   
   template<typename T>
-  void removeComponent(Entity entity) {
+  void removeComponent(EntityID entity) {
     getComponentPool<T>()->removeData(entity);
   }
 
-	void entityDestroyed(Entity entity);
+	void entityDestroyed(EntityID entity);
 
 
 private:
@@ -57,7 +57,10 @@ private:
    LOGGER_ASSERT(it != this->componentTypeID.end(), "Component not registered.");
    return std::static_pointer_cast<ComponentPool<T>>(this->componentPools[it->second]);
   }
-
+  
+  // @brief: map to dynamically store the componentPool inside the array.
+  // Also to dynamically update which componentType is assigned to each
+  // bit of Signatures
 	std::unordered_map<const char*, ComponentType> componentTypeID;
 	std::shared_ptr<IComponentPool> componentPools[MAX_COMPONENTS];
 

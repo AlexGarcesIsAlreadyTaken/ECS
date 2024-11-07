@@ -9,16 +9,16 @@ public:
   EntityManager();
   ~EntityManager() = default;
 
-  const Entity createEntity();
-  void destroyEntity(Entity entity);
+  const EntityID createEntity();
+  void destroyEntity(EntityID entity);
 
-  const Signature getSignature(Entity entity) const;
-  void setSignature(Entity entity, const Signature& signature);
+  const Signature getSignature(EntityID entity) const;
+  void setSignature(EntityID entity, const Signature& signature);
 
-  const EntityStatus getStatus(Entity entity) const;
+  const EntityStatus getStatus(EntityID entity) const;
 
 private:
-  std::queue<Entity> availableEntities;
+  std::queue<EntityID> availableEntities;
   EntityStatus entitiesStatus[MAX_ENTITIES];
   Signature signatures[MAX_ENTITIES];
 

@@ -9,7 +9,7 @@
 class IComponentPool {
 public:
 	virtual ~IComponentPool() = default;
-	virtual void entityDestroyed(Entity entity) = 0;
+	virtual void entityDestroyed(EntityID entity) = 0;
 };
 
 // Represents a pool of T-Components
@@ -22,7 +22,7 @@ public:
 		this->componentToEntity.resize(0);
 	}
 
-	void addComponent(Entity entity, const T& component) {
+	void addComponent(EntityID entity, const T& component) {
 		LOGGER_ASSERT(this->sparseSet[entity] == NULL_INDEX, "entity already has component.");
 		LOGGER_ASSERT(entity < MAX_ENTITIES, "entity out of range.");
 		this->sparseSet[entity] = denseSet.size();
@@ -36,13 +36,13 @@ public:
 		DEBUG_MESSAGE("-----------------------------------------------");
 	}
 
-	T& getComponent(Entity entity) const {
+	T& getComponent(EntityID entity) const {
 		LOGGER_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
 		LOGGER_ASSERT(this->sparseSet[entity] != NULL_INDEX, "Entity has no component.")
 		return this->denseSet[this->sparseSet[entity]];
 	}
 	
-  void removeData(Entity entity) {
+  void removeData(EntityID entity) {
     LOGGER_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
     LOGGER_ASSERT(this->sparseSet[entity] != NULL_INDEX, "Removing non-existing entity.");
 
@@ -69,7 +69,7 @@ public:
     DEBUG_MESSAGE("-----------------------------------------------");
   }
 
-  void entityDestroyed(Entity entity) override {
+  void entityDestroyed(EntityID entity) override {
     if (this->sparseSet[entity] != NULL_INDEX) this->removeData(entity);
   }
 private:

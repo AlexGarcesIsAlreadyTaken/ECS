@@ -2,7 +2,7 @@ NAME = main
 
 all: $(NAME)
 
-OBJECTS = example.o glad.o Engine.o EntityManager.o ComponentManager.o
+OBJECTS = example.o glad.o Engine.o EntityManager.o ComponentManager.o Ecs.o
 
 INC = -Iinc
 
