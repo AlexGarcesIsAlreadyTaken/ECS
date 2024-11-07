@@ -1,6 +1,8 @@
 # ECS - A CS Student Approach :)
 
-The implementation is based on Austin Morlan's ECS [blog](https://austinmorlan.com/posts/entity_component_system/). However I did some minor changes over Data Structures.
+The implementation is based on Austin Morlan's ECS [blog](https://austinmorlan.com/posts/entity_component_system/). However I did some minor changes (currently):
+- Data Structures
+- System implementations
 
 Task List:
 
