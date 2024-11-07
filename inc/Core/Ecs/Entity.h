@@ -38,8 +38,13 @@ struct Entity {
   Ecs *ecs;
 
   template <typename T>
-  inline void addComponent(const T& t) {
+  inline void addComponent(const T& t = {}) {
     ecs->addComponent<T>(this->entity, t);
+  }
+
+  template <typename T>
+  inline T& getComponent() const {
+    return ecs->getComponent<T>(this->entity);
   }
 
   template <typename T>

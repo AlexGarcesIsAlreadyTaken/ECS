@@ -30,10 +30,10 @@ public:
 		this->componentToEntity.push_back(entity);
 	}
 
-	T& getComponent(EntityID entity) const {
+	T* getComponent(EntityID entity) {
 		LOGGER_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
 		LOGGER_ASSERT(this->sparseSet[entity] != NULL_INDEX, "Entity has no component.")
-		return this->denseSet[this->sparseSet[entity]];
+		return &(this->denseSet[this->sparseSet[entity]]);
 	}
 	
   void removeData(EntityID entity) {

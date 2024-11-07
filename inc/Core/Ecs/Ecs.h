@@ -3,7 +3,9 @@
 
 #include "Core/Ecs/ComponentManager.h"
 #include "Core/Ecs/EntityManager.h"
+#include "Utils/Logger.h"
 #include <functional>
+#include <type_traits>
 
 struct Entity;
 
@@ -20,7 +22,7 @@ public:
   }
   
   template <typename T>
-  void addComponent(EntityID entity, const T& component) {
+  void addComponent(EntityID entity, const T& component = {}) {
     this->componentManager.addComponent<T>(entity, component);
     Signature signature = this->entityManager.getSignature(entity);
     Signature componentSignature = 0b01 << this->componentManager.getComponentType<T>();
@@ -71,6 +73,7 @@ public:
       const Signature entitySignature = this->entityManager.getSignature(entity);
       if ((entitySignature&maskSignature) == maskSignature) {
         DEBUG_MESSAGE("Entity(" << entity << ") has components " << entitySignature);
+        function(componentManager.getComponent<Types>(entity)...);
       }
     }
   }

@@ -30,7 +30,7 @@ public:
 
   template <typename T>
   T& getComponent(EntityID entity) const {
-    return getComponentPool<T>()->getComponent(entity);
+    return *(getComponentPool<T>()->getComponent(entity));
   }
 
   template <typename T>
