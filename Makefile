@@ -1,6 +1,6 @@
-all: main
+NAME = main
 
-NAME = ecs
+all: $(NAME)
 
 OBJECTS = example.o glad.o Engine.o EntityManager.o ComponentManager.o
 
@@ -9,7 +9,7 @@ INC = -Iinc
 DEFINE = DEBUG
 #DEFINE = 
 
-CC = g++-13
+CC = g++-11
 
 CXX_FLAGS = -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -std=c++20
 

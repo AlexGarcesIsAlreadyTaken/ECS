@@ -7,6 +7,7 @@
 // @brief: Identifies an entity of the world
 typedef uint32_t Entity;
 const uint32_t MAX_ENTITIES = 5000;
+enum class EntityStatus {Dead = 0, Alive};
 
 // @brief: Identifies which type each component is
 typedef uint8_t ComponentType;

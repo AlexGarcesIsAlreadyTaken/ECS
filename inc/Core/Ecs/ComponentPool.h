@@ -12,6 +12,7 @@ public:
 	virtual void entityDestroyed(Entity entity) = 0;
 };
 
+// Represents a pool of T-Components
 template <typename T>
 class ComponentPool : public IComponentPool {
 public:

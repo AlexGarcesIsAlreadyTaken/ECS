@@ -6,22 +6,23 @@
 
 class EntityManager {
 public:
-	EntityManager();
-~EntityManager() = default;
+  EntityManager();
+  ~EntityManager() = default;
 
-	const Entity createEntity();
-	void destroyEntity(Entity entity);
+  const Entity createEntity();
+  void destroyEntity(Entity entity);
 
-	const Signature getSignature(Entity entity) const;
-	void setSignature(Entity entity, const Signature& signature);
+  const Signature getSignature(Entity entity) const;
+  void setSignature(Entity entity, const Signature& signature);
 
+  const EntityStatus getStatus(Entity entity) const;
 
 private:
-	std::queue<Entity> availableEntities;
-	bool entitiesStatus[MAX_ENTITIES];
-	Signature signatures[MAX_ENTITIES];
+  std::queue<Entity> availableEntities;
+  EntityStatus entitiesStatus[MAX_ENTITIES];
+  Signature signatures[MAX_ENTITIES];
 
-	uint32_t livingEntities;
+  uint32_t livingEntities;
 };
 
 #endif

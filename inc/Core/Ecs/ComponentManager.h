@@ -5,6 +5,7 @@
 #include "Core/Ecs/ComponentPool.h"
 #include <unordered_map>
 
+// Class that handles with all registered components
 class ComponentManager {
 public:
   ComponentManager();
@@ -32,12 +33,21 @@ public:
     return getComponentPool<T>()->getComponent(entity);
   }
 
+  template <typename T>
+  const ComponentType getComponentType() {
+    const char* name = typeid(T).name();
+    auto it = this->componentTypeID.find(name);
+    LOGGER_ASSERT(it != this->componentTypeID.end(), "Component is not registered.");
+    return it->second;
+  }
+  
   template<typename T>
   void removeComponent(Entity entity) {
     getComponentPool<T>()->removeData(entity);
   }
 
 	void entityDestroyed(Entity entity);
+
 
 private:
   template <typename T>
