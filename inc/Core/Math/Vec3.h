@@ -1,13 +1,29 @@
 #ifndef VEC_H
 #define VEC_H
 
-#include "Constants.h"
 #include <cmath>
+#include "Utils/Constants.h"
 
 namespace Math {
     template <typename T>
     struct tvec3 {
-        T x, y, z;
+        union {
+          T x;
+          T s;
+          T p;
+        };
+
+        union {
+          T y;
+          T t;
+          T q;
+        };
+
+        union {
+          T z;
+          T v;
+          T r;
+        };
 
         tvec3(T x, T y, T z) : x(x), y(y), z(z) {}
         tvec3(T x) : x(x), y(x), z(x) {}

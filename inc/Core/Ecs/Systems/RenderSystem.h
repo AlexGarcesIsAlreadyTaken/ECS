@@ -2,6 +2,7 @@
 #define ECS_SYSTEMS_RENDER_SYSTEM_H
 
 #include "glad/glad.h"
+#include "Core/Renderer/Shader.h"
 #include "Core/Ecs/Components/Renderable.h"
 #include "Core/Ecs/Components/Square.h"
 #include "Core/Ecs/Systems/BaseSystem.h"
@@ -11,6 +12,7 @@ public:
 
   void init() override {
     this->ecs->forEach<Renderable, Square>(initBuffers);
+
   }
 
   void render() override {}

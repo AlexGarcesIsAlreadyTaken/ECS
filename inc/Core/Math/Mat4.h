@@ -1,7 +1,6 @@
 #ifndef MAT4_H
 #define MAT4_H
 
-#include "Core/Math/Constants.h"
 #include "Utils/Constants.h"
 #include "Core/Math/Vec3.h"
 

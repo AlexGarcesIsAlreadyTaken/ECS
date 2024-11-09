@@ -3,6 +3,7 @@
 
 
 #define LOGGER_INFO(_info) std::cout << _info << std::endl;
+#define LOGGER_ERROR(_error) LOGGER_INFO("ERROR::" << _error);
 #define LOGGER_ASSERT(_condition, _info) assert(_condition && _info);
 
 #ifdef DEBUG

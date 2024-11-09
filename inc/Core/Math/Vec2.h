@@ -1,12 +1,24 @@
 #ifndef VEC_H
 #define VEC_H
 
-#include "Constants.h"
+#include "Utils/Constants.h"
 
 namespace Math {
     template <typename T>
     struct tvec2 {
-        T x, y;
+        union {
+          T x;
+          T u;
+          T s;
+          T p;
+        };
+
+        union {
+          T y;
+          T v;
+          T t;
+          T r;
+        };
 
         tvec2(T x, T y) : x(x), y(y) {}
         tvec2(T x) : x(x), y(x) {}
