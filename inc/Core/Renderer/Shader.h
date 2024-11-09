@@ -3,6 +3,7 @@
 
 #include "glad/glad.h"
 #include "Utils/Constants.h"
+#include "Core/Math/Vec3.h"
 #include <type_traits>
 
 // Represents an object that deals with renderization:
@@ -29,6 +30,8 @@ namespace Renderer {
     if (std::is_same_v<T, Boolean>) glUniform1ui(loc, uint32_t(value));
     else if (std::is_same_v<T, uint32_t>) glUniform1ui(loc, value);
     else if (std::is_same_v<T, int32_t>) glUniform1i(loc, value);
+    else if (std::is_same_v<T, Math::vec3>) glUniform3fv(loc, value.x, value.y, value.z);
+    else if (std::is_same_v<T, Math::ivec3>) glUniform3i(loc, value.x, value.y, value.z);
   }
 };
 

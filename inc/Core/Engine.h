@@ -1,7 +1,7 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include "Core/Ecs/Systems/RenderSystem.h"
+#include "Core/Systems/RenderSystem.h"
 #include "Core/Ecs/Entity.h"
 #include "Core/Ecs/Ecs.h"
 #include <GLFW/glfw3.h>

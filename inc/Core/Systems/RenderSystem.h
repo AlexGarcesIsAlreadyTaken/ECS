@@ -3,9 +3,9 @@
 
 #include "glad/glad.h"
 #include "Core/Renderer/Shader.h"
-#include "Core/Ecs/Components/Renderable.h"
-#include "Core/Ecs/Components/Square.h"
-#include "Core/Ecs/Systems/BaseSystem.h"
+#include "Core/Components/Renderable.h"
+#include "Core/Components/Square.h"
+#include "Core/Systems/BaseSystem.h"
 
 class RenderSystem : public BaseSystem {
 public:
