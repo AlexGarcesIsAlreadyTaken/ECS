@@ -54,22 +54,22 @@ const Renderer::Shader Renderer::createShader(const char *vertexPath, const char
 
   glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
   if (!success) {
-    glGetShaderInfoLog(vertexShader, sizeof(info), nullptr, info);
-    LOGGER_ERROR("SHADER::VERTEX::COMPILATION_FAILED::" << info);
+    glGetShaderInfoLog(fragmentShader, sizeof(info), nullptr, info);
+    LOGGER_ERROR("SHADER::FRAGMENT::COMPILATION_FAILED::" << info);
   }
 
-  Shader shader = glCreateProgram();
-  glAttachShader(shader, vertexShader);
-  glAttachShader(shader, fragmentShader);
-  glLinkProgram(shader);
+  Shader retShader = glCreateProgram();
+  glAttachShader(retShader, vertexShader);
+  glAttachShader(retShader, fragmentShader);
+  glLinkProgram(retShader);
 
-  glGetShaderiv(shader, GL_LINK_STATUS, &success);
+  glGetShaderiv(retShader, GL_LINK_STATUS, &success);
   if (!success) {
-    glGetShaderInfoLog(shader, sizeof(info), nullptr, info);
+    glGetShaderInfoLog(retShader, sizeof(info), nullptr, info);
     LOGGER_ERROR("SHADER::PROGRAM::LINKING_FAILED::" << info);
   }
 
   glDeleteShader(vertexShader);
   glDeleteShader(fragmentShader);
-  return shader;
+  return retShader;
 }

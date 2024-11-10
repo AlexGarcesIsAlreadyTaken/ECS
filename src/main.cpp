@@ -27,8 +27,9 @@ int main() {
     
     glfwSetKeyCallback(window, key_callback);
 
-		double previousTime = glfwGetTime();
+    glClearColor(9.0/256.0, 121.0/256.0, 105.0/255.0, 0.0);
 
+		double previousTime = glfwGetTime();
 
     Engine::instance()->init();
 
@@ -37,7 +38,9 @@ int main() {
 
 				double time = glfwGetTime();
 				float dt = time - previousTime;
+        std::clog << "\rFPS: " << uint32_t(1/dt) << std::flush;
 				Engine::instance()->update(dt);
+        Engine::instance()->render();
 				previousTime = time;
 
 				if (Engine::instance()->getKey(GLFW_KEY_ESCAPE)) {

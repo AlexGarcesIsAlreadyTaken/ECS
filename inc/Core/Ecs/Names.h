@@ -7,7 +7,7 @@
 
 // @brief: Identifies an entity of the world
 typedef uint32_t EntityID;
-const uint32_t MAX_ENTITIES = 5000;
+const uint32_t MAX_ENTITIES = 10000;
 enum class EntityStatus {Dead = 0, Alive};
 typedef std::unordered_set<EntityID> EntitiesPool;
 

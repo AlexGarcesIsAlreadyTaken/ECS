@@ -31,8 +31,6 @@ private:
 
   Ecs ecs;
   RenderSystem renderSystem;
-
-  Entity entity;
 };
 
 #endif

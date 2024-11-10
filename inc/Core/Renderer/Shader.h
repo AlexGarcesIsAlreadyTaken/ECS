@@ -5,6 +5,7 @@
 #include "Utils/Constants.h"
 #include "Core/Math/Vec3.h"
 #include <type_traits>
+#include "Utils/Logger.h"
 
 // Represents an object that deals with renderization:
 // - Shaders
@@ -22,16 +23,18 @@ namespace Renderer {
 
   const Shader createShader(const char *vertexPath, const char *fragmentPath);
 
-  inline void useShader(Shader shader) { currentShader = shader; glUseProgram(shader); }
+  inline void useShader(Shader shader) { currentShader = shader; glUseProgram(currentShader); }
 
-  template <typename T>
+  template <typename T> requires (std::is_same_v<T, Math::vec3>)
   inline void setUniform(const char *name, const T& value) {
     int32_t loc = glGetUniformLocation(currentShader, name);
-    if (std::is_same_v<T, Boolean>) glUniform1ui(loc, uint32_t(value));
-    else if (std::is_same_v<T, uint32_t>) glUniform1ui(loc, value);
-    else if (std::is_same_v<T, int32_t>) glUniform1i(loc, value);
-    else if (std::is_same_v<T, Math::vec3>) glUniform3fv(loc, value.x, value.y, value.z);
-    else if (std::is_same_v<T, Math::ivec3>) glUniform3i(loc, value.x, value.y, value.z);
+    glUniform3f(loc, value.x, value.y, value.z);
+  }
+
+  template <typename T> requires (std::is_same_v<T, Math::ivec3>)
+  inline void setUniform(const char *name, const T& value) {
+    int32_t loc = glGetUniformLocation(currentShader, name);
+    glUniform3i(loc, value.x, value.y, value.z);
   }
 };
 

@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include "Utils/Constants.h"
+#include <ostream>
 
 namespace Math {
     template <typename T>
@@ -117,6 +118,11 @@ namespace Math {
     template <typename T>
     inline tvec3<T> normalize(const tvec3<T>& vec) {
         return vec / vec.length();
+    }
+
+    template <typename T>
+    inline std::ostream& operator<<(std::ostream& out, const tvec3<T>& vec) {
+      return out << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
     }
 
     typedef tvec3<Real> vec3;

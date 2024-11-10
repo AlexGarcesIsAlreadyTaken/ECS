@@ -12,6 +12,7 @@ EntityManager::EntityManager() {
 }
 
 const EntityID EntityManager::createEntity() {
+  DEBUG_MESSAGE("living Entities: " << this->livingEntities);
 	LOGGER_ASSERT(this->livingEntities < MAX_ENTITIES, "Too many entities alive.");
 
 	EntityID entity = this->availableEntities.front();
@@ -28,7 +29,7 @@ void EntityManager::destroyEntity(EntityID entity) {
 	this->availableEntities.push(entity);
 	this->entitiesStatus[entity] = EntityStatus::Dead;
 	this->signatures[entity].reset();
-	--this->livingEntities;
+	this->livingEntities--;
   this->mLiveEntities.erase(entity);
 }
 

@@ -1,42 +1,26 @@
 #ifndef ECS_SYSTEMS_RENDER_SYSTEM_H
 #define ECS_SYSTEMS_RENDER_SYSTEM_H
 
-#include "glad/glad.h"
 #include "Core/Renderer/Shader.h"
+#include "Core/Renderer/Buffer.h"
 #include "Core/Components/Renderable.h"
 #include "Core/Components/Square.h"
-#include "Core/Systems/BaseSystem.h"
+#include "Core/Ecs/BaseSystem.h"
 
 class RenderSystem : public BaseSystem {
 public:
-
   void init() override {
-    this->ecs->forEach<Renderable, Square>(initBuffers);
-
+    this->simpleShader = Renderer::createShader("Shaders/simple.vert", "Shaders/simple.frag");
+    this->ecs->forEach<Renderable, Square>(Renderer::initSquare);
   }
 
-  void render() override {}
-
+  void render() override {
+    Renderer::useShader(this->simpleShader);
+    Renderer::setUniform<Math::vec3>("color", Math::vec3(1.0, 1.0, 0.0));
+    this->ecs->forEach<Renderable, Square>(Renderer::renderSquare);
+  }
 private:
-  static void initBuffers(Renderable& r, Square& s) {
-    glGenVertexArrays(1, &r.vao);
-    glBindVertexArray(r.vao);
-
-    glGenBuffers(1, &r.vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, r.vbo);
-    glBufferData(0, sizeof(s.vertices), s.vertices, GL_STATIC_DRAW);
-
-    glGenBuffers(1, &r.ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, r.ebo);
-    glBufferData(1, sizeof(elements), elements, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(Real), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    DEBUG_MESSAGE("Render System init");
-  }
-
-  constexpr static uint8_t elements[6] = {0, 1, 2, 1, 2, 3};
+  Renderer::Shader simpleShader;
 };
 
 #endif

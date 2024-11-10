@@ -2,7 +2,7 @@ NAME = main
 
 all: $(NAME)
 
-OBJECTS = Engine.o glad.o $(NAME).o EntityManager.o ComponentManager.o Ecs.o Shader.o
+OBJECTS = Engine.o glad.o $(NAME).o EntityManager.o ComponentManager.o Ecs.o Shader.o Buffer.o Texture.o
 
 INC = inc
 

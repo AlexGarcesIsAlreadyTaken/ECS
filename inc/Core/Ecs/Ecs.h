@@ -3,7 +3,6 @@
 
 #include "Core/Ecs/ComponentManager.h"
 #include "Core/Ecs/EntityManager.h"
-#include "Utils/Logger.h"
 #include <functional>
 #include <type_traits>
 
@@ -42,7 +41,6 @@ public:
     Signature componentSignature = 0b01 << this->componentManager.getComponentType<T>();
     Signature newSignature = signature & (~componentSignature);
     this->entityManager.setSignature(entity, newSignature);
-    DEBUG_MESSAGE(entity << " signature: " << newSignature);
   }
   
   /*
@@ -66,13 +64,11 @@ public:
   template <typename ...Types, typename Func>
   void forEach(Func&& function) {
     const Signature maskSignature = getMask<Types...>();
-    DEBUG_MESSAGE("Signature: " << maskSignature);
     EntitiesPool entitiesPool = this->entityManager.liveEntities();
     for (auto it = entitiesPool.begin(); it != entitiesPool.end(); it++) {
       const EntityID entity = *it;
       const Signature entitySignature = this->entityManager.getSignature(entity);
       if ((entitySignature&maskSignature) == maskSignature) {
-        DEBUG_MESSAGE("Entity(" << entity << ") has components " << entitySignature);
         function(componentManager.getComponent<Types>(entity)...);
       }
     }
