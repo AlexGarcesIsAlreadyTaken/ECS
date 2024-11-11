@@ -1,5 +1,5 @@
-#ifndef VEC_H
-#define VEC_H
+#ifndef VEC_3_H
+#define VEC_3_H
 
 #include <cmath>
 #include "Utils/Constants.h"

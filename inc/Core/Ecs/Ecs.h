@@ -64,12 +64,12 @@ public:
   template <typename ...Types, typename Func>
   void forEach(Func&& function) {
     const Signature maskSignature = getMask<Types...>();
-    EntitiesPool entitiesPool = this->entityManager.liveEntities();
-    for (auto it = entitiesPool.begin(); it != entitiesPool.end(); it++) {
-      const EntityID entity = *it;
-      const Signature entitySignature = this->entityManager.getSignature(entity);
-      if ((entitySignature&maskSignature) == maskSignature) {
-        function(componentManager.getComponent<Types>(entity)...);
+    GroupsPool groupsPool = this->entityManager.getGroups();
+    for (auto& [signature, group] : groupsPool) {
+      if ((signature&maskSignature) == maskSignature) {
+        for (EntityID entity : group) {
+          function(componentManager.getComponent<Types>(entity)...);
+        }
       }
     }
   }

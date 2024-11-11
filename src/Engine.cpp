@@ -1,4 +1,5 @@
  #include "Core/Engine.h"
+#include "Core/Renderer/Texture.h"
 #include <time.h>
 
 void Engine::keyReleased(int key) {
@@ -23,23 +24,21 @@ const bool Engine::getKey(int key) const {
 
 void Engine::init() {
   this->ecs.registerComponent<Renderable>();
-  this->ecs.registerComponent<Square>();
+  this->ecs.registerComponent<Quad>();
+
+  Renderer::Texture texture = Renderer::createTexture("Textures/plainWhite.png");
 
   srand(time(nullptr));
 
-  for (uint32_t i = 0; i < 10000; ++i) {
-    DEBUG_MESSAGE("iteration: " << i);
+  for (uint32_t i = 0; i < 100; ++i) {
     Entity entity = ecs.createEntity();
     entity.addComponent<Renderable>();
+    
 
     Real x = (rand()%1001)*0.002 - 1.0;
     Real y = (rand()&1001)*0.002 - 1.0;
     
-    Math::vec3 v0(x, y, 0);
-    Math::vec3 v1(x, y + 0.1, 0);
-    Math::vec3 v2(x + 0.1, y, 0);
-    Math::vec3 v3(x + 0.1, y + 0.1, 0);
-    entity.addComponent<Square>(Square(v0, v1, v2, v3));
+    entity.addComponent<Quad>(Quad(Math::vec2(x, y), Math::vec2(0.1)));
   }
 
   this->renderSystem.setEcs(&ecs);

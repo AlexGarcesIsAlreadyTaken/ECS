@@ -1,6 +1,7 @@
-#ifndef VEC_H
-#define VEC_H
+#ifndef VEC_2_H
+#define VEC_2_H
 
+#include <cmath>
 #include "Utils/Constants.h"
 
 namespace Math {

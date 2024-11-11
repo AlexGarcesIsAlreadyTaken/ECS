@@ -1,3 +1,6 @@
+#ifndef RENDERER_TEXTURE__H
+#define RENDERER_TEXTURE__H
+
 #include "Utils/Constants.h"
 
 namespace Renderer {
@@ -14,4 +17,8 @@ namespace Renderer {
 
   const Texture createTexture(const char* texturePath, const TextureFormat& format = TextureFormat::RGBA);
 
+  inline void setTexture(Texture texture, uint8_t textureID = 0) { currentTexture = texture; }
+
 };
+
+#endif

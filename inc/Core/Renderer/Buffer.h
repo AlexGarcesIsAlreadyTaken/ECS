@@ -2,11 +2,11 @@
 #define RENDERER_BUFFER_H
 
 #include "Core/Components/Renderable.h"
-#include "Core/Components/Square.h"
+#include "Core/Components/Quad.h"
 
 namespace Renderer {
-  void initSquare(Renderable& r, Square& s);
-  void renderSquare(Renderable& r, Square& s);
+  void initQuad(Renderable& r, Quad& q);
+  void renderQuad(Renderable& r, Quad& q);
 };
 
 #endif

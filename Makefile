@@ -24,7 +24,7 @@ $(NAME): $(OBJECTS)
 %.o: src/%.cpp
 	$(CC) $^ -I$(INC) -D$(DEFINE) $(CXX_FLAGS) -c -o $@
 
-realclean: $(OBJECTS) $(NAME)
+realclean: $(OBJECTS)
 	rm $^
 
 clean: $(NAME)

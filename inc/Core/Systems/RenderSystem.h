@@ -4,20 +4,20 @@
 #include "Core/Renderer/Shader.h"
 #include "Core/Renderer/Buffer.h"
 #include "Core/Components/Renderable.h"
-#include "Core/Components/Square.h"
+#include "Core/Components/Quad.h"
 #include "Core/Ecs/BaseSystem.h"
 
 class RenderSystem : public BaseSystem {
 public:
   void init() override {
     this->simpleShader = Renderer::createShader("Shaders/simple.vert", "Shaders/simple.frag");
-    this->ecs->forEach<Renderable, Square>(Renderer::initSquare);
+    this->ecs->forEach<Renderable, Quad>(Renderer::initQuad);
   }
 
   void render() override {
     Renderer::useShader(this->simpleShader);
     Renderer::setUniform<Math::vec3>("color", Math::vec3(1.0, 1.0, 0.0));
-    this->ecs->forEach<Renderable, Square>(Renderer::renderSquare);
+    this->ecs->forEach<Renderable, Quad>(Renderer::renderQuad);
   }
 private:
   Renderer::Shader simpleShader;

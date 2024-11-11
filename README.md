@@ -12,6 +12,7 @@ Task List:
 - [x] System/Logic Handler
 - [x] Coordinator (as class Ecs)
 - [x] Entity Handler [Nomad approach](https://medium.com/@savas/nomad-game-engine-part-4-2-adding-handles-8d299d80c7d0)
+- [x] Groups (optimization purpose)
 - [ ] Events
 
 Example:

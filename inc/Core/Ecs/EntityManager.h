@@ -3,28 +3,40 @@
 
 #include "Core/Ecs/Names.h"
 #include <queue>
+#include <unordered_set>
+#include <unordered_map>
+
+// Groups: Each group represents the set of entities
+// that exactly have those components. When looking for entities
+// that have a set of components we check for each group its 
+// signature and in case it meets the condition (exactly / atLeast)
+// passes all the entities inside them pool
+// Problem: max(#groups) = 2^{MAX_COMPONENTS}
+typedef std::unordered_set<EntityID> Group;
+typedef std::unordered_map<Signature, Group> GroupsPool;
 
 class EntityManager {
 public:
   EntityManager();
   ~EntityManager() = default;
 
-  const EntitiesPool& liveEntities() { return this->mLiveEntities; }
-
   const EntityID createEntity();
   void destroyEntity(EntityID entity);
 
-  const Signature getSignature(EntityID entity) const;
+  const GroupsPool& getGroups() { return this->groupsPool; }
+
+  const Signature getSignature(EntityID entity);
   void setSignature(EntityID entity, const Signature& signature);
 
-  const EntityStatus getStatus(EntityID entity) const;
 
 private:
+  const inline Boolean isAlive(EntityID entity);
+  
   std::queue<EntityID> availableEntities;
-
-  EntitiesPool mLiveEntities;
-  EntityStatus entitiesStatus[MAX_ENTITIES];
+  
   Signature signatures[MAX_ENTITIES];
+
+  GroupsPool groupsPool;
 
   uint32_t livingEntities;
 };
