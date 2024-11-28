@@ -25,20 +25,28 @@ const bool Engine::getKey(int key) const {
 void Engine::init() {
   this->ecs.registerComponent<Renderable>();
   this->ecs.registerComponent<Quad>();
+  this->ecs.registerComponent<TextureComponent>();
 
-  Renderer::Texture texture = Renderer::createTexture("Textures/plainWhite.png");
+  Renderer::Texture texture;
+  DEBUG_MESSAGE("plainWhiteTexture address: " << &texture);
+  texture = Renderer::createTexture("Textures/plainWhite.png", Renderer::TextureFormat::RGBA);
+
 
   srand(time(nullptr));
 
-  for (uint32_t i = 0; i < 100; ++i) {
+  for (uint32_t i = 0; i < MAX_ENTITIES; ++i) {
     Entity entity = ecs.createEntity();
     entity.addComponent<Renderable>();
     
 
     Real x = (rand()%1001)*0.002 - 1.0;
     Real y = (rand()&1001)*0.002 - 1.0;
+    Real z = (rand()&1001)*0.002 - 1.0;
     
     entity.addComponent<Quad>(Quad(Math::vec2(x, y), Math::vec2(0.1)));
+    
+    TextureComponent tC(texture, Math::vec3(x, y, z)/2.0f + 0.5f);
+    if (x*y > 0) entity.addComponent<TextureComponent>(tC);
   }
 
   this->renderSystem.setEcs(&ecs);

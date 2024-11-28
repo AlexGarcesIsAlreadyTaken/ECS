@@ -7,6 +7,8 @@
 namespace Renderer {
   void initQuad(Renderable& r, Quad& q);
   void renderQuad(Renderable& r, Quad& q);
+  
+  void initTextureQuad(Renderable& r, Quad& q);
 };
 
 #endif

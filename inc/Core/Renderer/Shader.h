@@ -36,6 +36,12 @@ namespace Renderer {
     int32_t loc = glGetUniformLocation(currentShader, name);
     glUniform3i(loc, value.x, value.y, value.z);
   }
+
+  template <typename T> requires (std::is_same_v<T, uint32_t>)
+  inline void setUniform(const char *name, const T& value) {
+    int32_t loc = glGetUniformLocation(currentShader, name);
+    glUniform1i(loc, value);
+  }
 };
 
 #endif

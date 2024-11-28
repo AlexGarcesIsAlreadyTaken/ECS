@@ -35,6 +35,12 @@ public:
   }
 
   template <typename T>
+  const Boolean has(EntityID entity) {
+    Signature mask = getMask<T>();
+    return (this->entityManager.getSignature(entity)&mask) == mask;
+  }
+
+  template <typename T>
   void removeComponent(EntityID entity) {
     this->componentManager.removeComponent<T>(entity);
     Signature signature = this->entityManager.getSignature(entity);
@@ -67,8 +73,12 @@ public:
     GroupsPool groupsPool = this->entityManager.getGroups();
     for (auto& [signature, group] : groupsPool) {
       if ((signature&maskSignature) == maskSignature) {
-        for (EntityID entity : group) {
-          function(componentManager.getComponent<Types>(entity)...);
+        for (EntityID entity : group) {					
+          if constexpr (std::is_invocable_v<Func, EntityID, Types&...>) {
+            function(entity, componentManager.getComponent<Types>(entity)...);
+					} else if constexpr (std::is_invocable_v<Func, Types&...>) {
+            function(componentManager.getComponent<Types>(entity)...);
+          }
         }
       }
     }
