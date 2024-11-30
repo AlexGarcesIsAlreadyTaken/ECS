@@ -10,6 +10,8 @@
 
 #include "Utils/Logger.h"
 
+#include <cmath>
+
 class RenderSystem : public BaseSystem {
 public:
   void init() override {
@@ -44,8 +46,22 @@ public:
 
     this->ecs->forEach<Renderable, Quad>(renderBuffers);
   }
+
+  void update(Real dt) override {
+    this->ecs->forEach<TextureComponent>([dt](TextureComponent& tC) {changeTint(dt, tC);});
+
+  }
 private:
   Renderer::Shader simpleShader, textureShader;
+
+  static void changeTint(Real dt, TextureComponent& tC) {
+      Real x = sin(dt)/100;
+      Real y = cos(dt)/100;
+      tC.tint += Math::vec3(x, y, 0.0);
+      if (tC.tint.x > 1.0) tC.tint.x = 0.0;
+      if (tC.tint.y > 1.0) tC.tint.y = 0.0;
+      if (tC.tint.z > 1.0) tC.tint.z = 0.0;
+  }
 };
 
 #endif

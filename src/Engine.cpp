@@ -10,10 +10,6 @@ void Engine::keyPressed(int key) {
 	this->keys[key] = true;
 }
 
-void Engine::update(float dt) {
-	this->dt = dt;
-}
-
 const float Engine::deltaTime() const {
 	return this->dt;
 }
@@ -46,11 +42,16 @@ void Engine::init() {
     entity.addComponent<Quad>(Quad(Math::vec2(x, y), Math::vec2(0.1)));
     
     TextureComponent tC(texture, Math::vec3(x, y, z)/2.0f + 0.5f);
-    if (x*y > 0) entity.addComponent<TextureComponent>(tC);
+    entity.addComponent<TextureComponent>(tC);
   }
 
   this->renderSystem.setEcs(&ecs);
   this->renderSystem.init();
+}
+
+void Engine::update(Real dt) {
+  this->dt = dt;
+  this->renderSystem.update(dt);
 }
 
 void Engine::render() {
